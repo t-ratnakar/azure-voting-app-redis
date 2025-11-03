@@ -47,7 +47,7 @@ spec:
     rollingUpdate:
       maxSurge: 1
       maxUnavailable: 1
-  minReadySeconds: 5 
+  minReadySeconds: 5
   template:
     metadata:
       labels:
@@ -55,9 +55,12 @@ spec:
     spec:
       nodeSelector:
         "kubernetes.io/os": linux
+      imagePullSecrets:
+      - name: acr-secret        # 👈 if your AKS is not attached to ACR
       containers:
       - name: azure-vote-front
-        image: mcr.microsoft.com/azuredocs/azure-vote-front:v1
+        image: acractions101.azurecr.io/image:latest   # 👈 use your ACR image
+        imagePullPolicy: Always
         ports:
         - containerPort: 80
         resources:
